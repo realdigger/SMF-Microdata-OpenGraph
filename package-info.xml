@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info">
+
+    <id>digger:microdata4smf</id>
+    <name>Microdata 4 SMF</name>
+    <type>modification</type>
+    <version>1.0 beta1</version>
+
+    <install for="2.0 - 2.0.99">
+        <readme parsebbc="true">readme/english.txt</readme>
+        <readme parsebbc="true" lang="russian">readme/russian.txt</readme>
+        <readme parsebbc="true" lang="english-utf8">readme/english-utf8.txt</readme>
+        <readme parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
+        <modification>modification.xml</modification>
+    </install>
+
+    <uninstall for="2.0 - 2.0.99">
+        <modification>modification.xml</modification>
+    </uninstall>
+
+</package-info>

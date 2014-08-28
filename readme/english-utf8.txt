@@ -1,0 +1,5 @@
+[center][b]Microdata 4 SMF[/b][/center]
+
+This mod adds microdata breadcrumb schema ([url]http://www.data-vocabulary.org/Breadcrumb/[/url]) for SMF linktree.
+
+This mod is licensed under CC BY-NC-ND 4.0 [url]http://creativecommons.org/licenses/by-nc-nd/4.0/[/url].

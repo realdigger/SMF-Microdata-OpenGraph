@@ -7,11 +7,11 @@
 
     <file name="$themedir/index.template.php">
         <operation>
-            <search position="replace"><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', '>';]]></search>
+            <search position="replace" whitespace="loose"><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', '>';]]></search>
             <add><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', (empty($shown_linktree) ? ' itemscope itemtype="http://data-vocabulary.org/Breadcrumb"' : ''), '>';]]></add>
         </operation>
         <operation>
-            <search position="replace"><![CDATA[				<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';]]></search>
+            <search position="replace" whitespace="loose"><![CDATA[				<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';]]></search>
             <add><![CDATA[				<a href="' . $tree['url'] . '"' . (empty($shown_linktree) ? ' itemprop="url"' : '') .'><span' . (empty($shown_linktree) ? ' itemprop="title"' : '') . '>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';]]></add>
         </operation>
     </file>

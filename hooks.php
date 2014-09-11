@@ -27,7 +27,7 @@ else
 
 $hooks = array(
     'integrate_pre_include' => '$sourcedir/Mod-Microdata4Smf.php',
-    'integrate_menu_buttons' => 'addMicrodata4SmfCopyright',
+    'integrate_pre_load' => 'loadMicrodata4SmfHooks'
 );
 
 foreach ($hooks as $hook => $function)

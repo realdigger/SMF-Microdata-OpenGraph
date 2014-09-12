@@ -47,6 +47,9 @@ function setMicrodata4SmfMetaOg()
     // TODO check if we have Optimus Brave installed
     if ($context['current_action'] == 'media' && !empty($_REQUEST['sa']) && !empty($_REQUEST['in'])) return;
 
+    // Set og:site_name
+    $og_site_name = $context['forum_name'];
+
     // Set og:title
     if (!empty($context['subject'])) $og_title = $context['subject'];
     else $og_title = $context['page_title'];
@@ -76,6 +79,7 @@ function setMicrodata4SmfMetaOg()
   <meta property="og:url" content="' . $context['canonical_url'] . '" />';
 
     $context['html_headers'] .= '
+  <meta property="og:site_name" content="' . $og_site_name . '" />
   <meta property="og:title" content="' . $og_title . '" />
   <meta property="og:type" content="' . $og_type . '" />
   <meta property="og:image" content="' . $og_image . '" />

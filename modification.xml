@@ -3,17 +3,24 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification">
 
     <id>digger:microdata4smf</id>
-    <version>1.0 beta1</version>
+    <version>1.0 beta2</version>
 
     <file name="$themedir/index.template.php">
         <operation>
             <search position="replace" whitespace="loose"><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', '>';]]></search>
             <add><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', (empty($shown_linktree) ? ' itemscope itemtype="http://data-vocabulary.org/Breadcrumb"' : ''), '>';]]></add>
         </operation>
+
         <operation>
             <search position="replace" whitespace="loose"><![CDATA[				<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';]]></search>
             <add><![CDATA[				<a href="' . $tree['url'] . '"' . (empty($shown_linktree) ? ' itemprop="url"' : '') .'><span' . (empty($shown_linktree) ? ' itemprop="title"' : '') . '>' . $tree['name'] . '</span></a>' : '<span>' . $tree['name'] . '</span>';]]></add>
         </operation>
+
+        <operation>
+            <search position="replace" whitespace="loose"><![CDATA[<html]]></search>
+            <add><![CDATA[<html prefix="og: http://ogp.me/ns#"]]></add>
+        </operation>
+
     </file>
 
 </modification>

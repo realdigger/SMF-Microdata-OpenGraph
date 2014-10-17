@@ -12,8 +12,8 @@
         <readme parsebbc="true" lang="russian">readme/russian.txt</readme>
         <readme parsebbc="true" lang="english-utf8">readme/english-utf8.txt</readme>
         <readme parsebbc="true" lang="russian-utf8">readme/russian-utf8.txt</readme>
-        <require-file name="Sources/Mod-Microdata4Smf.php" destination="$sourcedir"/>
-        <require-dir name="languages" destination="$themedir"/>
+        <require-dir name="Sources" destination="$boarddir"/>
+        <require-dir name="Themes" destination="$boarddir"/>
         <modification>modification.xml</modification>
         <code>hooks.php</code>
         <redirect url="?action=admin;area=modsettings"/>
@@ -21,7 +21,7 @@
 
     <uninstall for="2.0 - 2.0.99">
         <remove-file name="$sourcedir/Mod-Microdata4Smf.php"/>
-        <remove-dir name="$themedir/languages/Microdata4Smf"/>
+        <remove-dir name="$languagedir/Microdata4Smf"/>
         <modification reverse="true">modification.xml</modification>
         <code>hooks.php</code>
     </uninstall>

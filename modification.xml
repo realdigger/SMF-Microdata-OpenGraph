@@ -24,7 +24,7 @@
 
     </file>
 
-    <file name="$themes_dir/Reseller/index.template.php">
+    <file error="skip" name="$themes_dir/Reseller/index.template.php">
 
         <operation>
             <search position="replace" whitespace="loose"><![CDATA[<html]]></search>

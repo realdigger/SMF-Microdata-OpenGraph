@@ -25,6 +25,7 @@ function addMicrodata4SmfCopyright()
         $context['copyrights']['mods'][] = '<a href="http://mysmf.ru/mods/microdata-4-smf" target="_blank">Microdata 4 SMF</a> &copy; 2014, digger';
 }
 
+
 /**
  * Load all needed hooks
  */
@@ -35,6 +36,7 @@ function loadMicrodata4SmfHooks()
     add_integration_function('integrate_menu_buttons', 'setMicrodata4SmfMetaOg', false);
     add_integration_function('integrate_menu_buttons', 'setMicrodata4SmfMetaTwitter', false);
 }
+
 
 /**
  * Set meta tags for OpenGraph markup
@@ -60,18 +62,19 @@ function setMicrodata4SmfMetaOg()
 
     // Set og:image
     // TODO check for users permissions to show attachments allowedTo('view_attachments')
-    if (!empty($context['topic_first_message']) && !empty($attachments[$context['topic_first_message']][0]['width']) && !empty($attachments[$context['topic_first_message']][0]['approved']))
-        $og_image = $scripturl . '?action=dlattach;topic=' . $context['current_topic'] . '.0;attach=' . $attachments[$context['topic_first_message']][0]['id_attach'];
+    // first_message -> topic_first_message
+    if (!empty($modSettings['microdata4smf_logo_attachment']) && !empty($context['first_message']) && !empty($attachments[$context['first_message']][0]['width']) && !empty($attachments[$context['first_message']][0]['approved']))
+        $og_image = $scripturl . '?action=dlattach;topic=' . $context['current_topic'] . '.0;attach=' . $attachments[$context['first_message']][0]['id_attach'];
     else if (!empty($modSettings['microdata4smf_logo'])) $og_image = trim($modSettings['microdata4smf_logo']);
     else if (!empty($context['header_logo_url_html_safe'])) $og_image = $context['header_logo_url_html_safe'];
     else $og_image = $settings['images_url'] . '/smflogo.png"';
 
     // Set og:description
     if (!empty($context['is_poll'])) $og_description = $txt['poll'] . ': ' . $context['poll']['question'];
-    else if (!empty($context['topic_first_message'])) $og_description = getMicrodata4SmfDescription($context['topic_first_message']);
+    else if (!empty($context['first_message'])) $og_description = getMicrodata4SmfDescription($context['first_message']);
     else if (!empty($modSettings['microdata4smf_description'])) $og_description = $modSettings['microdata4smf_description'];
     else $og_description = $og_title;
-
+    // TODO Boards description
 
     // Set og:url if we have canonical
     if (!empty($context['canonical_url']))
@@ -86,6 +89,7 @@ function setMicrodata4SmfMetaOg()
   <meta property="og:description" content="' . $og_description . '" />
   ';
 }
+
 
 /**
  * Set meta tags for Twitter Cards markup
@@ -105,6 +109,7 @@ function setMicrodata4SmfMetaTwitter()
   <meta name="twitter:creator" content="' . $modSettings['microdata4smf_twitter'] . '">';
 }
 
+
 /**
  * Generate admin section for mod settings
  * @param $config_vars config vars
@@ -117,6 +122,8 @@ function changeMicrodata4SmfSettings(&$config_vars)
         array(
             array('title', 'microdata4smf_settings'),
             array('text', 'microdata4smf_logo'),
+            array('check', 'microdata4smf_logo_attachment'),
+            //array('check', 'microdata4smf_logo_img'),
             array('large_text', 'microdata4smf_description'),
             array('text', 'microdata4smf_twitter'),
         )

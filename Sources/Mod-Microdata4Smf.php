@@ -10,6 +10,7 @@
 //http://www.google.com/webmasters/tools/richsnippets
 //https://developers.facebook.com/tools/debug/
 //https://dev.twitter.com/docs/cards
+//http://vk.com/dev/pages.clearCache
 
 if (!defined('SMF'))
     die('Hacking attempt...');
@@ -35,6 +36,57 @@ function loadMicrodata4SmfHooks()
     add_integration_function('integrate_menu_buttons', 'addMicrodata4SmfCopyright', false);
     add_integration_function('integrate_menu_buttons', 'setMicrodata4SmfMetaOg', false);
     add_integration_function('integrate_menu_buttons', 'setMicrodata4SmfMetaTwitter', false);
+    add_integration_function('integrate_admin_areas', 'addMicrodata4SmfAdminArea', false);
+    add_integration_function('integrate_modify_modifications', 'addMicrodata4SmfAdminAction', false);
+}
+
+
+function addMicrodata4SmfAdminArea(&$admin_areas)
+{
+    global $txt;
+    loadLanguage('Microdata4Smf/');
+
+    $admin_areas['config']['areas']['modsettings']['subsections']['microdata4smf'] = array($txt['microdata4smf_admin_menu']);
+}
+
+
+function addMicrodata4SmfAdminAction(&$subActions)
+{
+    $subActions['microdata4smf'] = 'addMicrodata4SmfAdminSettings';
+}
+
+
+/**
+ * Generate admin section for mod settings
+ * @param $return_config array config vars
+ */
+function addMicrodata4SmfAdminSettings($return_config = false)
+{
+    global $txt, $scripturl, $context;
+    loadLanguage('Microdata4Smf/');
+
+    $context['page_title'] = $txt['microdata4smf_admin_menu'];
+    $context['post_url'] = $scripturl . '?action=admin;area=modsettings;save;sa=microdata4smf';
+
+    $config_vars = array(
+        array('title', 'microdata4smf_settings'),
+        array('text', 'microdata4smf_logo'),
+        array('check', 'microdata4smf_logo_attachment'),
+        //array('check', 'microdata4smf_logo_img'),
+        array('large_text', 'microdata4smf_description'),
+        array('text', 'microdata4smf_twitter'),
+    );
+
+    if ($return_config)
+        return $config_vars;
+
+    if (isset($_GET['save'])) {
+        checkSession();
+        saveDBSettings($config_vars);
+        redirectexit('action=admin;area=modsettings;sa=microdata4smf');
+    }
+
+    prepareDBSettingContext($config_vars);
 }
 
 
@@ -54,14 +106,15 @@ function setMicrodata4SmfMetaOg()
 
     // Set og:title
     if (!empty($context['subject'])) $og_title = $context['subject'];
-    else $og_title = $context['page_title'];
+    else if (!empty($context['page_title'])) $og_title = $context['page_title'];
+    else if (!empty($context['page_title_html_safe'])) $og_title = $context['page_title_html_safe'];
+    else $og_title = $settings['$mbname'];
 
     // Set og:type
     if (!empty($context['current_topic'])) $og_type = 'article';
     else $og_type = 'website';
 
     // Set og:image
-    // TODO check for users permissions to show attachments allowedTo('view_attachments')
     // first_message -> topic_first_message
     if (!empty($modSettings['microdata4smf_logo_attachment']) && !empty($context['first_message']) && !empty($attachments[$context['first_message']][0]['width']) && !empty($attachments[$context['first_message']][0]['approved']))
         $og_image = $scripturl . '?action=dlattach;topic=' . $context['current_topic'] . '.0;attach=' . $attachments[$context['first_message']][0]['id_attach'];
@@ -107,27 +160,6 @@ function setMicrodata4SmfMetaTwitter()
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="' . $modSettings['microdata4smf_twitter'] . '">
   <meta name="twitter:creator" content="' . $modSettings['microdata4smf_twitter'] . '">';
-}
-
-
-/**
- * Generate admin section for mod settings
- * @param $config_vars config vars
- */
-function changeMicrodata4SmfSettings(&$config_vars)
-{
-    loadLanguage('Microdata4Smf/');
-
-    $config_vars = array_merge($config_vars,
-        array(
-            array('title', 'microdata4smf_settings'),
-            array('text', 'microdata4smf_logo'),
-            array('check', 'microdata4smf_logo_attachment'),
-            //array('check', 'microdata4smf_logo_img'),
-            array('large_text', 'microdata4smf_description'),
-            array('text', 'microdata4smf_twitter'),
-        )
-    );
 }
 
 

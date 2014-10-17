@@ -129,6 +129,8 @@ function setMicrodata4SmfMetaOg()
     else $og_description = $og_title;
     // TODO Boards description
 
+    // og:updated_time
+
     // Set og:url if we have canonical
     if (!empty($context['canonical_url']))
         $context['html_headers'] .= '

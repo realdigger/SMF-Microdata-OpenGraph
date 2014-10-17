@@ -16,7 +16,7 @@
         <require-dir name="Themes" destination="$boarddir"/>
         <modification>modification.xml</modification>
         <code>hooks.php</code>
-        <redirect url="?action=admin;area=modsettings"/>
+        <redirect url="?action=admin;area=modsettings;sa=microdata4smf"/>
     </install>
 
     <uninstall for="2.0 - 2.0.99">

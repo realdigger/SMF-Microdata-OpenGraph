@@ -13,3 +13,4 @@ $txt['microdata4smf_description'] = 'Текст для описания главной страницы сайта. 
 $txt['microdata4smf_twitter'] = 'Имя вашего twitter аккаунта (<a href="https://cards-dev.twitter.com/validator">Перейти на страницу проверки и подтверждения твиттер-карточек</a>)';
 $txt['microdata4smf_logo_img'] = 'Картинка из первого тэга img';
 $txt['microdata4smf_logo_attachment'] = 'Использовать первое графическое вложение первого сообщения на странице как картинку статьи (если не включено, будет использовано изображение, заданное по умолчанию). Требуется разрешение <a href="?action=admin;area=permissions;sa=modify;group=-1">гостям</a> на просмотр вложений';
+$txt['microdata4smf_admin_menu'] = 'Microdata 4 SMF';

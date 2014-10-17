@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification">
 
     <id>digger:microdata4smf</id>
-    <version>1.0 beta2</version>
+    <version>1.0 beta3</version>
 
     <file name="$themedir/index.template.php">
 

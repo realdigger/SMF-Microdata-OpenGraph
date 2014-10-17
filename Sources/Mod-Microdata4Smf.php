@@ -95,7 +95,7 @@ function addMicrodata4SmfAdminSettings($return_config = false)
  */
 function setMicrodata4SmfMetaOg()
 {
-    global $context, $attachments, $scripturl, $modSettings, $settings, $txt;
+    global $mbname, $context, $attachments, $scripturl, $modSettings, $settings, $txt;
 
     // Don't set og meta for media pages
     // TODO check if we have Optimus Brave installed
@@ -108,7 +108,7 @@ function setMicrodata4SmfMetaOg()
     if (!empty($context['subject'])) $og_title = $context['subject'];
     else if (!empty($context['page_title'])) $og_title = $context['page_title'];
     else if (!empty($context['page_title_html_safe'])) $og_title = $context['page_title_html_safe'];
-    else $og_title = $settings['$mbname'];
+    else $og_title = $mbname;
 
     // Set og:type
     if (!empty($context['current_topic'])) $og_type = 'article';

@@ -7,10 +7,14 @@
  * License: CC BY-NC-ND 4.0 http://creativecommons.org/licenses/by-nc-nd/4.0/
  */
 
-//http://www.google.com/webmasters/tools/richsnippets
-//https://developers.facebook.com/tools/debug/
-//https://dev.twitter.com/docs/cards
-//http://vk.com/dev/pages.clearCache
+// http://www.google.com/webmasters/tools/richsnippets
+// https://developers.facebook.com/tools/debug/
+// https://dev.twitter.com/docs/cards
+// http://vk.com/dev/pages.clearCache
+// https://support.google.com/webmasters/answer/146645?hl=ru
+
+// TODO: add_settings for mod installer
+// TODO: Share page or topic?
 
 if (!defined('SMF'))
     die('Hacking attempt...');
@@ -71,8 +75,8 @@ function addMicrodata4SmfAdminSettings($return_config = false)
     $config_vars = array(
         array('title', 'microdata4smf_settings'),
         array('text', 'microdata4smf_logo'),
-        array('check', 'microdata4smf_logo_attachment'),
-        //array('check', 'microdata4smf_logo_img'),
+        array('check', 'microdata4smf_logo_attachment'), // validate value // if (!empty($modSettings['attachmentEnable'])
+        array('check', 'microdata4smf_logo_img'),
         array('large_text', 'microdata4smf_description'),
         array('text', 'microdata4smf_twitter'),
     );
@@ -97,14 +101,15 @@ function setMicrodata4SmfMetaOg()
 {
     global $mbname, $context, $attachments, $scripturl, $modSettings, $settings, $txt;
 
-    // Don't set og meta for media pages
-    // TODO check if we have Optimus Brave installed
+    // TODO: Don't set og meta for media pages
+    // TODO: check if we have Optimus Brave installed
     if ($context['current_action'] == 'media' && !empty($_REQUEST['sa']) && !empty($_REQUEST['in'])) return;
 
     // Set og:site_name
     $og_site_name = $context['forum_name'];
 
     // Set og:title
+    // TODO: use safe values
     if (!empty($context['subject'])) $og_title = $context['subject'];
     else if (!empty($context['page_title'])) $og_title = $context['page_title'];
     else if (!empty($context['page_title_html_safe'])) $og_title = $context['page_title_html_safe'];
@@ -114,22 +119,28 @@ function setMicrodata4SmfMetaOg()
     if (!empty($context['current_topic'])) $og_type = 'article';
     else $og_type = 'website';
 
+    // Set og:description
+    // TODO: use safe values
+    if (!empty($context['is_poll'])) $og_description = $txt['poll'] . ': ' . $context['poll']['question'];
+    else if (!empty($context['first_message'])) {
+        $og_body = getMicrodata4SmfDescription($context['first_message']);
+        $og_description = $og_body['description'];
+    } else if (!empty($modSettings['microdata4smf_description'])) $og_description = $modSettings['microdata4smf_description'];
+    else $og_description = $og_title;
+    // TODO: Boards description
+
     // Set og:image
-    // first_message -> topic_first_message
-    if (!empty($modSettings['microdata4smf_logo_attachment']) && !empty($context['first_message']) && !empty($attachments[$context['first_message']][0]['width']) && !empty($attachments[$context['first_message']][0]['approved']))
-        $og_image = $scripturl . '?action=dlattach;topic=' . $context['current_topic'] . '.0;attach=' . $attachments[$context['first_message']][0]['id_attach'];
+    // TODO: first_message -> topic_first_message ??? First on page or first of topic ? is_image
+    if (!empty($modSettings['microdata4smf_logo_attachment']) && !empty($context['first_message']) && !empty($attachments[$context['first_message']][0]['width']) && !empty($attachments[$context['first_message']][0]['approved']) && $attachments[$context['first_message']][0]['width'] >= 200 && $attachments[$context['first_message']][0]['height'] >= 200)
+        $og_image = $scripturl . '?action=dlattach;topic=' . $context['current_topic'] . '.0;attach=' . $attachments[$context['first_message']][0]['id_attach'] . ';image';
+    else if (!empty($modSettings['microdata4smf_logo_img']) && !empty($og_body['image']))
+        $og_image = $og_body['image'];
     else if (!empty($modSettings['microdata4smf_logo'])) $og_image = trim($modSettings['microdata4smf_logo']);
     else if (!empty($context['header_logo_url_html_safe'])) $og_image = $context['header_logo_url_html_safe'];
-    else $og_image = $settings['images_url'] . '/smflogo.png"';
+    else $og_image = $settings['images_url'] . '/smflogo.png"'; // TODO: Default images url!
 
-    // Set og:description
-    if (!empty($context['is_poll'])) $og_description = $txt['poll'] . ': ' . $context['poll']['question'];
-    else if (!empty($context['first_message'])) $og_description = getMicrodata4SmfDescription($context['first_message']);
-    else if (!empty($modSettings['microdata4smf_description'])) $og_description = $modSettings['microdata4smf_description'];
-    else $og_description = $og_title;
-    // TODO Boards description
 
-    // og:updated_time
+    // TODO: og:updated_time
 
     // Set og:url if we have canonical
     if (!empty($context['canonical_url']))
@@ -159,41 +170,48 @@ function setMicrodata4SmfMetaTwitter()
     if ($smcFunc['substr']($modSettings['microdata4smf_twitter'], 0, 1) != '@') $modSettings['microdata4smf_twitter'] = '@' . $modSettings['microdata4smf_twitter'];
 
     $context['html_headers'] .= '
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="' . $modSettings['microdata4smf_twitter'] . '">
-  <meta name="twitter:creator" content="' . $modSettings['microdata4smf_twitter'] . '">';
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="' . $modSettings['microdata4smf_twitter'] . '" />
+  <meta name="twitter:creator" content="' . $modSettings['microdata4smf_twitter'] . '" />
+  ';
 }
 
 
 /**
  * Get topic first message description
  * @param $id_msg
- * @return string description
+ * @return array description
  */
 function getMicrodata4SmfDescription($id_msg)
 {
-    global $smcFunc;
+    global $smcFunc, $modSettings;
 
     $request = $smcFunc['db_query']('', '
-			SELECT SUBSTRING(body, 1, 250)
+			SELECT ' . (!empty($modSettings['microdata4smf_logo_img']) ? 'body ' : 'SUBSTRING(body, 1, 250) ') . '
 			FROM {db_prefix}messages
 			WHERE id_msg = {int:id_msg}
 			LIMIT 1',
         array(
-            'id_msg' => $id_msg
+            'id_msg' => (int)$id_msg
         )
     );
 
     list ($description) = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
 
+    preg_match('/\[img.*](.+)\[\/img]/i', $description, $image);
+    if (!empty($image[1])) $image = trim($image[1]);
+
     $description = strip_tags(str_replace(array('<br>', '<br/>', '<br />', '<hr>', '<hr/>', '<hr />'), '. ', parse_bbc($description, false)));
 
-    if ($smcFunc['strlen']($description) < 200) return $description;
+    if ($smcFunc['strlen']($description) > 200) {
+        $description = $smcFunc['substr']($description, 0, 197);
+        $position = $smcFunc['strpos']($description, ' ', $smcFunc['strlen']($description) - 15);
+        $description = $smcFunc['substr']($description, 0, $position);
+    }
 
-    $description = $smcFunc['substr']($description, 0, 197);
-    $position = $smcFunc['strpos']($description, ' ', $smcFunc['strlen']($description) - 15);
-    $description = $smcFunc['substr']($description, 0, $position);
-
-    return trim($description) . '...';
+    return array(
+        'description' => trim($description) . '...',
+        'image' => $image,
+    );
 }

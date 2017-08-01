@@ -1,5 +1,11 @@
 [center][b]Microdata 4 SMF[/b][/center]
 
-This mod adds microdata breadcrumb schema ([url]http://www.data-vocabulary.org/Breadcrumb/[/url]) for SMF linktree.
+Мод добавляет различные виды семантической микроразметки к страницам SMF.
 
-This mod is licensed under CC BY-NC-ND 4.0 [url]http://creativecommons.org/licenses/by-nc-nd/4.0/[/url].
+Разметка хлебных крошек для Google.
+Разметка OpenGraph для первого сообщения на странице (поддерживается FaceBook, ВКонтакте и прочие).
+Разметка TwitterCards для первого сообщения на странице (поддерживается Twitter).
+
+Подробное описание [url]https://github.com/realdigger/SMF-Microdata-OpenGraph[/url]
+
+Мод распространяется под лицензией The MIT License (MIT) [url]https://opensource.org/licenses/MIT[/url]

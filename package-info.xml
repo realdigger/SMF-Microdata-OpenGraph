@@ -5,7 +5,7 @@
     <id>digger:microdata4smf</id>
     <name>Microdata 4 SMF</name>
     <type>modification</type>
-    <version>1.0 beta4</version>
+    <version>1.0 beta5</version>
 
     <install for="2.0 - 2.0.99">
         <readme parsebbc="true">readme/english.txt</readme>
@@ -15,7 +15,7 @@
         <require-dir name="Sources" destination="$boarddir"/>
         <require-dir name="Themes" destination="$boarddir"/>
         <modification>modification.xml</modification>
-        <code>hooks.php</code>
+        <database>hooks.php</database>
         <redirect url="?action=admin;area=modsettings;sa=microdata4smf"/>
     </install>
 
@@ -23,7 +23,7 @@
         <remove-file name="$sourcedir/Mod-Microdata4Smf.php"/>
         <remove-dir name="$languagedir/Microdata4Smf"/>
         <modification reverse="true">modification.xml</modification>
-        <code>hooks.php</code>
+        <database>hooks.php</database>
     </uninstall>
 
 </package-info>

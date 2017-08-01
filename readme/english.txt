@@ -1,5 +1,7 @@
 [center][b]Microdata 4 SMF[/b][/center]
 
-This mod adds microdata breadcrumb schema ([url]http://www.data-vocabulary.org/Breadcrumb/[/url]) for SMF linktree.
+This mod adds microdata breadcrumb schema for SMF linktree, some Open Graph tags and TwitterCards.
 
-This mod is licensed under CC BY-NC-ND 4.0 [url]http://creativecommons.org/licenses/by-nc-nd/4.0/[/url].
+See more [url]https://github.com/realdigger/SMF-Microdata-OpenGraph[/url]
+
+This mod is licensed under The MIT License (MIT) [url]https://opensource.org/licenses/MIT[/url]

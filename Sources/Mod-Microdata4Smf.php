@@ -1,10 +1,11 @@
 <?php
 /**
- * Project: Microdata 4 SMF
- * Version: 1.0
- * File: Mod-Microdata.php
- * Author: digger
- * License: CC BY-NC-ND 4.0 http://creativecommons.org/licenses/by-nc-nd/4.0/
+ * @package Microdata 4 SMF
+ * @file: Mod-Microdata4Smf.php
+ * @author digger http://mysmf.net
+ * @copyright 2014-2017
+ * @license The MIT License (MIT) https://opensource.org/licenses/MIT
+ * @version 1.0
  */
 
 // http://www.google.com/webmasters/tools/richsnippets
@@ -12,9 +13,6 @@
 // https://dev.twitter.com/docs/cards
 // http://vk.com/dev/pages.clearCache
 // https://support.google.com/webmasters/answer/146645?hl=ru
-
-// TODO: add_settings for mod installer
-// TODO: Share page or topic?
 
 if (!defined('SMF'))
     die('Hacking attempt...');
@@ -27,7 +25,7 @@ function addMicrodata4SmfCopyright()
     global $context;
 
     if ($context['current_action'] == 'credits')
-        $context['copyrights']['mods'][] = '<a href="http://mysmf.ru/mods/microdata-4-smf" target="_blank">Microdata 4 SMF</a> &copy; 2014, digger';
+        $context['copyrights']['mods'][] = '<a href="https://mysmf.net/mods/microdata-4-smf" target="_blank">Microdata 4 SMF</a> &copy; 2014-2017, digger';
 }
 
 

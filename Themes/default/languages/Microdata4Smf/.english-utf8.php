@@ -1,10 +1,11 @@
 <?php
 /**
- * Project: Microdata 4 SMF
- * Version: 1.0
- * File: Mod-Microdata.php
- * Author: digger
- * License: CC BY-NC-ND 4.0 http://creativecommons.org/licenses/by-nc-nd/4.0/
+ * @package Microdata 4 SMF
+ * @file: .english-utf8.php
+ * @author digger http://mysmf.net
+ * @copyright 2014-2017
+ * @license The MIT License (MIT) https://opensource.org/licenses/MIT
+ * @version 1.0
  */
 
 $txt['microdata4smf_settings'] = 'Microdata 4 Smf';

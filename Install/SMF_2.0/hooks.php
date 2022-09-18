@@ -21,10 +21,11 @@ elseif (!defined('SMF'))
 if ((SMF == 'SSI') && !$user_info['is_admin'])
     die('Admin privileges required.');
 
-if (!empty($context['uninstalling']))
+if (!empty($context['uninstalling'])) {
     $call = 'remove_integration_function';
-else
+} else {
     $call = 'add_integration_function';
+}
 
 $hooks = array(
     'integrate_pre_include' => '$sourcedir/Mod-Microdata4Smf.php',

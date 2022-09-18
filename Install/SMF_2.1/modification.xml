@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification">
+
+    <id>digger:microdata4smf</id>
+    <version>1.0.1</version>
+
+    <file name="$themedir/index.template.php">
+
+        <operation>
+            <search position="replace" whitespace="loose"><![CDATA[<html]]></search>
+            <add><![CDATA[<html prefix="og: https://ogp.me/ns#"]]></add>
+        </operation>
+
+        <operation>
+            <search position="replace" whitespace="loose"><![CDATA[
+        <div class="navigate_section">
+        <ul>';]]></search>
+            <add><![CDATA[
+        <div class="navigate_section">
+        <ul' . (empty($shown_linktree) ? ' itemscope itemtype="https://schema.org/BreadcrumbList"' : '') . '>';
+        $linktee_item_position = 1;]]></add>
+        </operation>
+
+        <operation>
+            <search position="replace" whitespace="loose"><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', '>';]]></search>
+            <add><![CDATA[			<li', ($link_num == count($context['linktree']) - 1) ? ' class="last"' : '', (empty($shown_linktree) ? ' itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"' : ''), '>';]]></add>
+        </operation>
+
+        <operation>
+            <search position="replace" whitespace="loose"><![CDATA[		if (isset($tree['url']))
+			echo '
+							<a href="' . $tree['url'] . '"><span>' . $tree['name'] . '</span></a>';
+		else
+			echo '
+							<span>' . $tree['name'] . '</span>';]]></search>
+            <add><![CDATA[		if (isset($tree['url']))
+			echo '
+							<a href="' . $tree['url'] . '"' . (empty($shown_linktree) ? ' itemprop="item"' : '') .'><span' . (empty($shown_linktree) ? ' itemprop="name"' : '') . '>' . $tree['name'] . '</span></a>
+							<meta itemprop="position" content="' . $linktee_item_position++ . '" />';
+		else
+			echo '
+							<span>' . $tree['name'] . '</span>';]]></add>
+        </operation>
+
+    </file>
+
+</modification>

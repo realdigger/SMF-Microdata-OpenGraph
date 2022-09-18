@@ -1,7 +1,12 @@
+[![GitHub release](https://img.shields.io/github/release/realdigger/SMF-Microdata-OpenGraph.svg)](https://github.com/realdigger/SMF-Microdata-OpenGraph/releases)
+[![SMF](https://img.shields.io/badge/SMF-2.0-blue.svg?style==flat)](https://simplemachines.org)
+[![SMF](https://img.shields.io/badge/SMF-2.1-blue.svg?style==flat)](https://simplemachines.org)
+[![license](https://img.shields.io/github/license/realdigger/SMF-Microdata-OpenGraph.svg)](https://github.com/realdigger/SMF-Microdata-OpenGraph/blob/master/LICENSE.txt)
+
 # SMF Microdata mod
-* **Author:** digger [http://mysmf.net](http://mysmf.net)
+* **Author:** digger [https://mysmf.net](https://mysmf.net)
 * **License:** The MIT License (MIT) https://opensource.org/licenses/MIT
-* **Compatible with:** SMF 2.0
+* **Compatible with:** SMF 2.0, SMF 2.1
 * **Languages:** English, Russian
 
 ## Installation  
